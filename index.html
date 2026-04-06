@@ -424,6 +424,7 @@ td:first-child{text-align:left;color:var(--text)}
 .brg-erp-pill{background:rgba(37,99,235,.1);color:#3b82f6;font-size:12px;font-weight:700;padding:7px 18px;border-radius:6px;margin-left:auto;border:1px solid rgba(37,99,235,.2);letter-spacing:.3px;font-family:var(--mono)}
 .brg-sec-title{font-size:11px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.6px;border-bottom:1px solid var(--border);padding-bottom:10px;margin-bottom:14px}
 .brg-grid2{display:grid;grid-template-columns:400px 1fr;gap:24px;align-items:stretch}
+.brg-grid2 > *{min-width:0}
 @media(max-width:880px){.brg-grid2{grid-template-columns:1fr}}
 table.brg-ret{width:100%;font-size:12px;border-collapse:collapse}
 table.brg-ret thead th{font-size:10px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.5px;padding-bottom:8px;text-align:right}
@@ -667,11 +668,29 @@ table.brg-bridge tbody tr.pct.B td{font-weight:700;color:var(--text2);background
   .cmrr-metric-label{font-size:10px}
   .cmrr-metric-value{font-size:11px}
 
-  /* Bridge — allow chart to render fully */
-  #tab-bridge{overflow-x:auto;-webkit-overflow-scrolling:touch}
-  .brg-grid2{max-width:100%}
-  #brgWfChart{max-width:100% !important;min-height:280px}
-  .brg-grid2{grid-template-columns:1fr !important;gap:14px}
+  /* Bridge — retención + waterfall ajustados al ancho móvil */
+  #tab-bridge{overflow-x:visible}
+  .brg-grid2{
+    width:100%;
+    max-width:100%;
+    min-width:0;
+    grid-template-columns:minmax(0,1fr) !important;
+    gap:14px;
+  }
+  .brg-grid2 > div{min-width:0}
+  table.brg-ret{table-layout:fixed}
+  table.brg-ret thead th,table.brg-ret tbody td{font-size:10px}
+  table.brg-ret thead th:first-child{width:112px !important}
+  table.brg-ret tbody td:first-child{white-space:normal;word-break:break-word;padding-right:8px}
+  table.brg-ret thead th:last-child,table.brg-ret tbody td:last-child{width:54px}
+  #brgWfChart{
+    width:100% !important;
+    max-width:100% !important;
+    min-width:0;
+    height:260px !important;
+    min-height:260px;
+    overflow:hidden;
+  }
 
   /* ERP metric cards in bridge — fix clipping */
   .erp-metric-card{overflow:visible}
@@ -1569,6 +1588,7 @@ function switchTab(t){
   document.querySelector(`.tab-btn.${t}`).classList.add('active');
   document.getElementById('tab-'+t).classList.add('active');
   if(t==='consol') consolRefresh();
+  if(t==='bridge' && typeof window.brgRefresh==='function') setTimeout(window.brgRefresh,80);
 }
 
 const MESES_FULL=['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
@@ -3654,6 +3674,7 @@ function consolRenderMrrMetrics(year,month){
       consolRenderMrrMetrics(yr,mo);
     }
   };
+  window.brgRefresh = function(){ if(brgAllData.length) _origBrgRender(); };
 })();
 
 // Refresh metrics when switching to tab
