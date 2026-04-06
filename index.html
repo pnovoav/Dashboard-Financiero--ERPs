@@ -1416,9 +1416,7 @@ function cloudAutoSave() {
             <span style="font-family:var(--sans);font-size:11px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:1px">◈ Flujo P&amp;L Consolidado — Sankey</span>
             <span style="font-size:10px;color:var(--text3)" id="consolSankeyLabel"></span>
           </div>
-          <div style="overflow-x:auto;-webkit-overflow-scrolling:touch;width:100%;">
-            <div id="consolSankeyChart" style="height:480px;width:100%;min-width:700px;"></div>
-          </div>
+          <div id="consolSankeyChart" style="height:480px;width:100%;"></div>
         </div>
 
         <!-- MRR / ARR Metrics by ERP (requires Bridge data) -->
@@ -2827,13 +2825,15 @@ function consolRenderSankey(year, month, label) {
   setTimeout(() => {
     el.innerHTML = '';
 
-    const W      = Math.max(el.clientWidth || 960, 700);
-    const H      = 480;
-    const ML     = 300;  // wide left margin: fixed logo column + text
-    const MR     = 240;  // tighter right margin — more flow width
-    const MT     = 70;   // tall top margin — room for above labels
-    const MB_    = 48;
-    const NODE_W = 5;
+    const W      = el.clientWidth || 960;
+    const mob    = W < 520;
+    const H      = mob ? Math.round(W * 0.85) : 480;
+    const ML     = mob ? Math.round(W * 0.36) : 300;
+    const MR     = mob ? Math.round(W * 0.28) : 240;
+    const MT     = mob ? 36 : 70;
+    const MB_    = mob ? 24 : 48;
+    const NODE_W = mob ? 4 : 5;
+    el.style.height = H + 'px';
 
     // ─── Build node + link arrays ───
     const rawNodes = [], rawLinks = [];
@@ -2900,7 +2900,7 @@ function consolRenderSankey(year, month, label) {
 
     // ── Manual Y nudge: push mb up, cost down, ebt up, gav down ──
     // This increases vertical spread so the Bézier has more room to curve.
-    const NUDGE = 36; // px — conservative enough to stay within chart bounds
+    const NUDGE = mob ? Math.round(H * 0.07) : 36;
     graph.nodes.forEach(n => {
       if (n.id === 'mb') {
         n.y0 -= NUDGE; n.y1 -= NUDGE;
@@ -2957,7 +2957,8 @@ function consolRenderSankey(year, month, label) {
     // col3 mb/cost  → above, centered on node (flow is gone to the right already)
     // col4 ebt/gav  → above, centered on node
     // otros         → below
-    const FS = 13, FS2 = 11, GAP = 10;
+    const FS = mob ? 9 : 13, FS2 = mob ? 8 : 11, GAP = mob ? 6 : 10;
+    const showLogos = !mob;
     const lblDefs = {
       t:     { name: 'Time',              val: timeIng,     pct: null,                     side: 'left',       col: '#374151' },
       f:     { name: 'Flexline',          val: flexIng,     pct: null,                     side: 'left',       col: '#374151' },
@@ -2992,11 +2993,8 @@ function consolRenderSankey(year, month, label) {
 
       if (lbl.side === 'left') {
         const x = node.x0 - GAP;
-        const logos = sankeyLogoMap[node.id] || [];
+        const logos = showLogos ? (sankeyLogoMap[node.id] || []) : [];
 
-        // Option A: all logos left-aligned to a fixed column.
-        // LOGO_COL_X = same X for every node — logos form a neat vertical column.
-        // Text starts immediately to the right of the logo (or at x if no logo).
         const ICON_SIZE    = node.id === 'mp' ? 34 : 28;
         const ICON_GAP     = 4;
         const TEXT_RIGHT_X = node.x0 - GAP;
@@ -3220,7 +3218,17 @@ function consolRenderMrrMetrics(year,month){
       usersSection.style.display='none';
     }
 
-    wrap.innerHTML='<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:14px">'+cards.join('')+'</div>';
+    var isMobMrr=window.innerWidth<640;
+    if(isMobMrr){
+      var mobileCards=cards.map(function(c){
+        return c.replace('class="cmrr-card" style="','class="cmrr-card" style="flex:0 0 calc(100% - 4px);scroll-snap-align:center;overflow:hidden;');
+      }).join('');
+      wrap.style.cssText='display:flex;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:none;gap:10px;padding:0 2px 6px';
+      wrap.innerHTML=mobileCards;
+    } else {
+      wrap.style.cssText='';
+      wrap.innerHTML='<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:14px">'+cards.join('')+'</div>';
+    }
 }
 
 // ═══════════════════════════════════════ BRIDGE MRR MODULE
