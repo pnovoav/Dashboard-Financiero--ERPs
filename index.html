@@ -661,10 +661,12 @@ table.brg-bridge tbody tr.pct.B td{font-weight:700;color:var(--text2);background
   .cmrr-grid::-webkit-scrollbar{display:none}
   .cmrr-card{flex:0 0 88%;scroll-snap-align:start}
 
-  /* Bridge overflow */
-  #tab-bridge{overflow-x:hidden}
-  .brg-grid2{max-width:100%}
+  /* Bridge overflow — contenido ancho va en scroll, no clipear */
+  #tab-bridge{overflow-x:visible}
+  .brg-grid2{max-width:100%;overflow-x:hidden}
   #brgWfChart{max-width:100% !important}
+  /* Wrap brg-ret tables for horizontal scroll on mobile */
+  .brg-ret-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
 
   /* Consol ARR header row — evitar que se corte */
   #consolMrrMetrics > div:first-child{flex-wrap:wrap;gap:8px}
@@ -1489,7 +1491,7 @@ function cloudAutoSave() {
       <div class="brg-card" style="margin-bottom:14px">
         <div class="brg-sec-title">a) Retención del Período — <span id="brgTitlePeriod"></span><em id="brgTitleUnit" style="font-weight:400;font-size:11px;color:var(--text3);font-style:normal;margin-left:6px"></em></div>
         <div class="brg-grid2">
-          <div>
+        <div class="brg-ret-wrap">
             <table class="brg-ret">
               <thead><tr><th style="width:185px"></th><th id="brgHdrMRR">MRR [UF]</th><th>% BoP</th></tr></thead>
               <tbody id="brgRetBody"></tbody>
@@ -3463,16 +3465,16 @@ function consolRenderMrrMetrics(year,month){
       var rows=top5.map(function(c,i){
         var arr=c.eop*12;
         var pct=total?((c.eop/total)*100).toFixed(1)+"%":"—";
-        return '<tr style="height:36px">'
-          +'<td style="color:var(--text3);padding:0 10px;font-size:10px;width:24px">'+(i+1)+'</td>'
-          +'<td style="padding:0 10px;color:var(--text);font-size:12px;text-align:left;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="'+c.rut+'">'+c.nombre+'</td>'
-          +'<td style="padding:0 10px;text-align:right;font-size:11px;font-weight:600;color:'+color+'">'+fmtVal(c.eop)+'</td>'
-          +'<td style="padding:0 10px;text-align:right;font-size:10px;color:var(--text3);width:52px">'+pct+'</td>'
+        return '<tr style="height:auto">'
+          +'<td style="color:var(--text3);padding:6px 8px;font-size:10px;width:20px;vertical-align:top">'+(i+1)+'</td>'
+          +'<td style="padding:6px 8px;color:var(--text);font-size:11px;text-align:left;word-break:break-word;line-height:1.4;vertical-align:top">'+c.nombre+'</td>'
+          +'<td style="padding:6px 8px;text-align:right;font-size:11px;font-weight:600;color:'+color+';white-space:nowrap;vertical-align:top">'+fmtVal(c.eop)+'</td>'
+          +'<td style="padding:6px 8px;text-align:right;font-size:10px;color:var(--text3);width:44px;white-space:nowrap;vertical-align:top">'+pct+'</td>'
           +'</tr>';
       }).join('');
 
       return '<div class="erp-metric-card" style="border-top:3px solid '+color+'">'
-        +'<div class="erp-metric-header">'
+        +'<div class="erp-metric-header" style="flex-wrap:wrap;gap:4px">'
         +'<span class="erp-metric-name" style="color:'+color+'">'+erp+'</span>'
         +'<span style="font-size:11px;font-weight:600;color:'+color+'">Total ARR: '+fmtVal(total)+'</span>'
         +'</div>'
