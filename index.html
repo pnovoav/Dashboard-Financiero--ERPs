@@ -704,6 +704,24 @@ table.brg-bridge tbody tr.pct.B td{font-weight:700;color:var(--text2);background
   /* Consol ARR header row — evitar que se corte */
   #consolMrrMetrics > div:first-child{flex-wrap:wrap;gap:8px}
   #consolMrrMetrics > div:first-child > span:last-child{width:100%}
+
+  /* ── Columna fija en tablas de scroll horizontal ── */
+  table.brg-bridge thead th:first-child,
+  table.brg-bridge tbody td:first-child{
+    position:sticky;left:0;z-index:2;
+    background:var(--surface);
+    box-shadow:2px 0 4px rgba(0,0,0,.06);
+  }
+  table.brg-bridge tbody tr.B td:first-child{background:var(--surface2)}
+  table.brg-bridge tbody tr.pct-hdr td:first-child{background:var(--surface)}
+  table.brg-bridge tbody tr.pct.B td:first-child{background:var(--surface2)}
+
+  #consolUsrTable thead th:first-child,
+  #consolUsrTable tbody td:first-child{
+    position:sticky;left:0;z-index:2;
+    background:var(--surface);
+    box-shadow:2px 0 4px rgba(0,0,0,.06);
+  }
 }
 </style>
 </head>
@@ -1523,10 +1541,11 @@ function cloudAutoSave() {
         <div class="brg-grid2">
           <div>
             <table class="brg-ret">
-              <thead><tr><th style="width:185px"></th><th id="brgHdrMRR">MRR [UF]</th><th>% BoP</th></tr></thead>
+              <thead><tr><th style="width:185px"></th><th id="brgHdrMRR">MRR [UF]</th></tr></thead>
               <tbody id="brgRetBody"></tbody>
             </table>
-            <table class="brg-ret" style="display:none"><tbody id="brgPctBody"></tbody></table>
+            <div style="border-top:1px solid var(--border2);margin:12px 0"></div>
+            <table class="brg-ret"><tbody id="brgPctBody"></tbody></table>
           </div>
           <div id="brgWfChart" style="min-height:300px;height:100%;width:100%"></div>
         </div>
@@ -3381,8 +3400,7 @@ function consolRenderMrrMetrics(year,month){
     ];
     document.getElementById("brgRetBody").innerHTML=rows.map(function(r){
       return '<tr class="'+(r.bold?"B":"")+'"><td class="'+r.cls+'">'+r.label+'</td>'
-        +'<td class="'+r.cls+'">'+brgFmt(r.val)+'</td>'
-        +'<td style="color:var(--text3);font-size:11px">'+(r.label==="BoP MRR"?"100,0%":brgFmtPct(r.val,p.bop))+'</td></tr>';
+        +'<td class="'+r.cls+'">'+brgFmt(r.val)+'</td></tr>';
     }).join("");
     var pctRows=[
       {label:"BoP MRR",pct:1,bold:false},{label:"(-) Churn",pct:p.churn/Math.abs(p.bop),bold:false},
