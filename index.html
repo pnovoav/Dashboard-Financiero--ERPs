@@ -484,6 +484,9 @@ table.brg-bridge tbody tr.pct.B td{font-weight:700;color:var(--text2);background
 .cloud-btn.primary:hover{background:var(--mgr2)}
 .cloud-sep{width:1px;height:18px;background:var(--border);margin:0 4px;flex-shrink:0}
 
+/* ── Upload panels individuales — solo ZIP ── */
+#mgrPanel, #rndPanel, #peruPanel, #mgrFileBar { display:none !important; }
+
 /* ═══════════════════════════════════════════════
    UPLOAD PANELS — colapsables
    ═══════════════════════════════════════════════ */
@@ -1075,16 +1078,15 @@ function cloudAutoSave() {
 <div class="container">
 
   <!-- ZIP UPLOAD PANEL -->
-  <div id="zipPanel" class="upload-panel">
-    <button class="upload-panel-btn" onclick="toggleUploadPanel('zipPanel')">
+  <div id="zipPanel" class="upload-panel" style="margin-bottom:8px">
+    <button class="upload-panel-btn" onclick="toggleUploadPanel('zipPanel')" style="padding:7px 12px;border-color:transparent;background:transparent;color:var(--text3)">
       <div class="upload-panel-btn-left">
-        <span class="upload-panel-btn-icon">📦</span>
+        <span class="upload-panel-btn-icon" style="opacity:.35;font-size:13px">📦</span>
         <div>
-          <div class="upload-panel-btn-title">Carga rápida — ZIP</div>
-          <div class="upload-panel-btn-sub">Sube todos los archivos de una vez</div>
+          <div class="upload-panel-btn-sub" style="font-size:9px;letter-spacing:.5px;text-transform:uppercase">Cargar datos · ZIP</div>
         </div>
       </div>
-      <span class="upload-panel-chevron">▼</span>
+      <span class="upload-panel-chevron" style="font-size:8px">▼</span>
     </button>
     <div class="upload-panel-body">
 
@@ -1524,8 +1526,7 @@ function cloudAutoSave() {
               <thead><tr><th style="width:185px"></th><th id="brgHdrMRR">MRR [UF]</th><th>% BoP</th></tr></thead>
               <tbody id="brgRetBody"></tbody>
             </table>
-            <div style="border-top:1px solid var(--border2);margin:12px 0"></div>
-            <table class="brg-ret"><tbody id="brgPctBody"></tbody></table>
+            <tbody id="brgPctBody" style="display:none"></tbody>
           </div>
           <div id="brgWfChart" style="min-height:300px;height:100%;width:100%"></div>
         </div>
@@ -3401,7 +3402,7 @@ function consolRenderMrrMetrics(year,month){
     var bopV=x12(p.bop)/div, chuV=x12(Math.abs(p.churn))/div, dwnV=x12(Math.abs(p.downsell))/div;
     var upV=x12(p.upsell)/div, newV=x12(p.newMRR)/div, eopV=x12(p.eop)/div;
     var grosV=bopV-chuV-dwnV, netV=grosV+upV;
-    var names=["BoP ARR","(-) Churn","(-) Down","(+) Upsell","(+) New","EoP ARR"];
+    var names=["BoP ARR","(-) Churn","(-) Downsell","(+) Upsell","(+) New","EoP ARR"];
     var absVals=[bopV,chuV,dwnV,upV,newV,eopV];
     var bases=[0,bopV-chuV,grosV-dwnV,grosV,netV,0];
     var colors=["#3b82f6","#f87171","#fca5a5","#34d399","#6ee7b7","#3b82f6"];
