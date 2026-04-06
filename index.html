@@ -975,7 +975,8 @@ function cloudRestore(data) {
     document.getElementById('mgrFileTag').innerHTML = mgrFiles.map(f => `<span class="file-tag">📄 ${f}</span>`).join(' ');
     document.getElementById('mgrUploadZone').style.display = 'none';
     document.getElementById('mgrDashboard').style.display  = 'block';
-    document.getElementById('mgrFileBar').style.display    = 'flex';
+    document.getElementById('mgrFileBar').style.display    = 'block';
+    document.getElementById('mgrFileSummary').textContent  = mgrFiles.length + ' archivo' + (mgrFiles.length!==1?'s':'') + ' cargado' + (mgrFiles.length!==1?'s':'');
     document.getElementById('mgrFileChips').innerHTML = mgrFiles.map(f =>
       `<span style="background:var(--surface2);border:1px solid var(--border2);border-radius:4px;padding:2px 9px;font-size:10px;color:var(--text2)">📄 ${f}</span>`
     ).join('');
@@ -1041,8 +1042,21 @@ function cloudAutoSave() {
 
 <div class="container">
 
-  <!-- ZIP UPLOAD BANNER -->
-  <div id="zipBanner" style="background:var(--surface);border:2px dashed var(--border2);border-radius:12px;padding:22px 28px;margin-bottom:24px;display:flex;align-items:center;gap:20px;flex-wrap:wrap;cursor:pointer;transition:all .2s" onclick="document.getElementById('zipInput').click()" ondragover="event.preventDefault();this.style.borderColor='var(--accent)';this.style.background='#eff6ff'" ondragleave="this.style.borderColor='var(--border2)';this.style.background='var(--surface)'" ondrop="event.preventDefault();this.style.borderColor='var(--border2)';this.style.background='var(--surface)';zipHandleFile(event.dataTransfer.files[0])">
+  <!-- ZIP UPLOAD PANEL -->
+  <div id="zipPanel" class="upload-panel">
+    <button class="upload-panel-btn" onclick="toggleUploadPanel('zipPanel')">
+      <div class="upload-panel-btn-left">
+        <span class="upload-panel-btn-icon">📦</span>
+        <div>
+          <div class="upload-panel-btn-title">Carga rápida — ZIP</div>
+          <div class="upload-panel-btn-sub">Sube todos los archivos de una vez</div>
+        </div>
+      </div>
+      <span class="upload-panel-chevron">▼</span>
+    </button>
+    <div class="upload-panel-body">
+
+  <div id="zipBanner" style="background:var(--surface);border:2px dashed var(--border2);border-radius:0 0 8px 8px;padding:22px 28px;display:flex;align-items:center;gap:20px;flex-wrap:wrap;cursor:pointer;transition:all .2s" onclick="document.getElementById('zipInput').click()" ondragover="event.preventDefault();this.style.borderColor='var(--accent)';this.style.background='#eff6ff'" ondragleave="this.style.borderColor='var(--border2)';this.style.background='var(--surface)'" ondrop="event.preventDefault();this.style.borderColor='var(--border2)';this.style.background='var(--surface)';zipHandleFile(event.dataTransfer.files[0])">
     <div style="font-size:28px;line-height:1">📦</div>
     <div style="flex:1;min-width:180px">
       <div style="font-size:13px;font-weight:700;color:var(--text);margin-bottom:3px">Carga rápida — sube tu ZIP con todos los archivos</div>
@@ -1053,7 +1067,7 @@ function cloudAutoSave() {
   </div>
 
   <!-- ZIP status bar (compact, collapsible) -->
-  <div id="zipStatus" style="display:none;background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:0;margin-bottom:20px;overflow:hidden">
+  <div id="zipStatus" style="display:none;background:var(--surface);border:1px solid var(--border);border-radius:0 0 8px 8px;padding:0;overflow:hidden">
     <div style="display:flex;align-items:center;gap:10px;padding:9px 14px;cursor:pointer" onclick="zipToggleDetails()" id="zipStatusBar">
       <span style="font-size:13px">📦</span>
       <span style="font-size:11px;font-weight:600;color:var(--text);flex:1" id="zipStatusTitle">ZIP cargado</span>
@@ -1066,6 +1080,9 @@ function cloudAutoSave() {
     </div>
     <input type="file" id="zipInput2" accept=".zip" style="display:none" onchange="zipHandleFile(this.files[0]);this.value=''">
   </div>
+
+    </div><!-- /upload-panel-body -->
+  </div><!-- /zipPanel -->
 
   
 <header>
@@ -1130,11 +1147,24 @@ function cloudAutoSave() {
     </div>
 
     <!-- Barra compacta (aparece después del primer archivo) -->
-    <div id="mgrFileBar" style="display:none;align-items:center;gap:8px;flex-wrap:wrap;background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:10px 14px;margin-bottom:16px">
-      <span style="font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:1.5px;white-space:nowrap">Mayor cargado</span>
-      <div id="mgrFileChips" style="display:flex;flex-wrap:wrap;gap:6px;flex:1"></div>
-      <button onclick="document.getElementById('mgrFile').click()" style="display:inline-flex;align-items:center;gap:5px;padding:5px 12px;border-radius:5px;border:1px solid var(--mgr);background:transparent;color:var(--mgr2);font-family:var(--mono);font-size:10px;cursor:pointer;white-space:nowrap;transition:all .15s" onmouseover="this.style.background='var(--mgr-dim)'" onmouseout="this.style.background='transparent'">+ Agregar período</button>
-      <button onclick="mgrClearAll()" style="display:inline-flex;align-items:center;gap:5px;padding:5px 12px;border-radius:5px;border:1px solid var(--border2);background:transparent;color:var(--text3);font-family:var(--mono);font-size:10px;cursor:pointer;transition:all .15s" onmouseover="this.style.color='var(--red2)';this.style.borderColor='var(--red2)'" onmouseout="this.style.color='var(--text3)';this.style.borderColor='var(--border2)'">✕ Limpiar</button>
+    <div id="mgrFileBar" class="upload-panel" style="display:none">
+      <button class="upload-panel-btn" onclick="toggleUploadPanel('mgrFileBar')">
+        <div class="upload-panel-btn-left">
+          <span class="upload-panel-btn-icon">📊</span>
+          <div>
+            <div class="upload-panel-btn-title">Manager Software</div>
+            <div class="upload-panel-btn-sub" id="mgrFileSummary">Mayor cargado</div>
+          </div>
+        </div>
+        <span class="upload-panel-chevron">▼</span>
+      </button>
+      <div class="upload-panel-body">
+        <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding:10px 14px;border:1px solid var(--border2);border-top:none;border-radius:0 0 8px 8px;background:var(--surface)">
+          <div id="mgrFileChips" style="display:flex;flex-wrap:wrap;gap:6px;flex:1"></div>
+          <button onclick="document.getElementById('mgrFile').click()" style="display:inline-flex;align-items:center;gap:5px;padding:5px 12px;border-radius:5px;border:1px solid var(--mgr);background:transparent;color:var(--mgr2);font-family:var(--mono);font-size:10px;cursor:pointer;white-space:nowrap;transition:all .15s" onmouseover="this.style.background='var(--mgr-dim)'" onmouseout="this.style.background='transparent'">+ Agregar período</button>
+          <button onclick="mgrClearAll()" style="display:inline-flex;align-items:center;gap:5px;padding:5px 12px;border-radius:5px;border:1px solid var(--border2);background:transparent;color:var(--text3);font-family:var(--mono);font-size:10px;cursor:pointer;transition:all .15s" onmouseover="this.style.color='var(--red2)';this.style.borderColor='var(--red2)'" onmouseout="this.style.color='var(--text3)';this.style.borderColor='var(--border2)'">✕ Limpiar</button>
+        </div>
+      </div>
     </div>
 
     <input type="file" id="mgrFile" multiple accept=".xlsx,.xls" style="display:none">
@@ -2069,7 +2099,7 @@ function peruRenderAll(){
   document.getElementById('peruKpi').innerHTML=`
     <div class="kpi-card" style="--kpi-accent:var(--peru)"><div class="kpi-label">Ingresos Operacionales · ${label}</div><div class="kpi-value" style="color:var(--peru2)">${fmtM(r.ing)}</div><div class="kpi-sub">${fmt(r.ing)}</div></div>
     <div class="kpi-card green"><div class="kpi-label">Margen Bruto</div><div class="kpi-value">${fmtM(r.mb)}</div><div class="kpi-sub">${pct(r.mb,r.ing)} margen</div></div>
-    <div class="kpi-card"><div class="kpi-label">EBITDA</div><div class="kpi-value">${fmtM(r.ebitda)}</div><div class="kpi-sub">${pct(r.ebitda,r.ing)} margen</div></div>`;
+    <div class="kpi-card blue"><div class="kpi-label">EBITDA</div><div class="kpi-value">${fmtM(r.ebitda)}</div><div class="kpi-sub">${pct(r.ebitda,r.ing)} margen</div></div>`;
 
   let rh=`
     <div class="pnl-row"><span class="pn">Ingresos Operacionales</span><span class="pv">${fmt(r.ing)}</span></div>
@@ -3837,6 +3867,7 @@ async function zipHandleFile(zipFile) {
     document.getElementById('zipStatusDetails').style.display='none';
     document.getElementById('zipDetailsArrow').textContent='▼';
     statusDiv.style.display = 'block';
+    openUploadPanel('zipPanel');
 
     // Auto-navigate to first loaded tab
     const firstType = tasks[0]?.type;
@@ -3867,6 +3898,7 @@ function zipResetBanner() {
   banner.ondragover = (e) => { e.preventDefault(); banner.style.borderColor='var(--accent)'; banner.style.background='#eff6ff'; };
   banner.ondragleave = () => { banner.style.borderColor='var(--border2)'; banner.style.background='var(--surface)'; };
   banner.ondrop = (e) => { e.preventDefault(); banner.style.borderColor='var(--border2)'; banner.style.background='var(--surface)'; zipHandleFile(e.dataTransfer.files[0]); };
+  openUploadPanel('zipPanel');
 }
 
 function zipToggleDetails(){
