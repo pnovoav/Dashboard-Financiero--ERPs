@@ -16,6 +16,8 @@
   --rnd:#7c3aed;--rnd2:#8b5cf6;--rnd3:#c4b5fd;--rnd-dim:rgba(124,58,237,.1);
   /* Group — vida amber #d97706 family */
   --grp:#d97706;--grp2:#f59e0b;--grp3:#fcd34d;--grp-dim:rgba(217,119,6,.1);
+  /* Peru — teal #0891b2 family */
+  --peru:#0891b2;--peru2:#06b6d4;--peru3:#67e8f9;--peru-dim:rgba(8,145,178,.1);
   /* Accent */
   --accent:#2563eb;--accent2:#3b82f6;--accent3:#93c5fd;
   /* Status */
@@ -103,6 +105,7 @@ header{display:flex;align-items:center;justify-content:space-between;margin-bott
 .tab-btn.manager.active{color:var(--mgr2);border-bottom-color:var(--mgr)}
 .tab-btn.random.active{color:var(--rnd2);border-bottom-color:var(--rnd)}
 .tab-btn.consol.active{color:var(--grp2);border-bottom-color:var(--grp)}
+.tab-btn.peru.active{color:var(--peru2);border-bottom-color:var(--peru)}
 .tab-content{display:none}
 .tab-content.active{display:block}
 
@@ -254,20 +257,25 @@ td:first-child{text-align:left;color:var(--text)}
 #tab-manager .upload-zone{border-color:var(--border2)}
 #tab-manager .upload-zone:hover{border-color:var(--mgr);background:var(--mgr-dim)}
 #tab-random .upload-zone{border-color:var(--border2)}
+#tab-peru .upload-zone{border-color:var(--border2)}
+#tab-peru .upload-zone:hover{border-color:var(--peru);background:var(--peru-dim)}
 .view-btn.active{background:var(--mgr);color:#ffffff !important;font-weight:500}
 /* Manager selectors green active */
 #tab-manager .view-btn.active{background:var(--mgr);color:#ffffff !important}
 #tab-random .view-btn.active{background:var(--rnd);color:#fff !important}
+#tab-peru .view-btn.active{background:var(--peru);color:#fff !important}
 #tab-consol .view-btn.active{background:var(--grp);color:#ffffff !important}
 #tab-metricas .view-btn.active{background:var(--grp);color:#ffffff !important}
 /* Company badges in period bars */
 .co-badge{display:inline-block;padding:3px 10px;border-radius:4px;font-size:10px;font-weight:600;letter-spacing:.5px;margin-right:8px}
 .co-badge.mgr{background:var(--mgr-dim);color:var(--mgr2);border:1px solid rgba(45,187,111,.25)}
 .co-badge.rnd{background:var(--rnd-dim);color:var(--rnd2);border:1px solid rgba(241,101,34,.25)}
+.co-badge.peru{background:var(--peru-dim);color:var(--peru2);border:1px solid rgba(8,145,178,.25)}
 .co-badge.grp{background:var(--grp-dim);color:var(--grp2);border:1px solid rgba(212,149,42,.25)}
 /* Section header accent per tab */
 #tab-manager .sec-header{border-left:3px solid var(--mgr)}
 #tab-random .sec-header{border-left:3px solid var(--rnd)}
+#tab-peru .sec-header{border-left:3px solid var(--peru)}
 /* Met table total row */
 .met-tbl tfoot tr td{font-weight:700;background:var(--grp-dim);color:var(--grp2)}
 
@@ -475,6 +483,140 @@ table.brg-bridge tbody tr.pct.B td{font-weight:700;color:var(--text2);background
 .cloud-btn.primary:hover{background:var(--mgr2)}
 .cloud-sep{width:1px;height:18px;background:var(--border);margin:0 4px;flex-shrink:0}
 
+/* ═══════════════════════════════════════════════
+   MOBILE RESPONSIVE — breakpoints 640px / 480px
+   ═══════════════════════════════════════════════ */
+
+/* ── Shared: allow horizontal scroll inside sections ── */
+.section{overflow:visible}
+.sec-body{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.consol-tbl-wrap,.met-table-wrap,.brg-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
+
+@media(max-width:768px){
+  /* Container padding */
+  .container{padding:14px}
+
+  /* Header */
+  header{flex-direction:column;align-items:flex-start;gap:10px}
+
+  /* Tab nav — horizontal scroll, no scrollbar visible */
+  .tab-nav{overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;flex-wrap:nowrap;padding-bottom:0}
+  .tab-nav::-webkit-scrollbar{display:none}
+  .tab-btn{white-space:nowrap;padding:10px 14px;font-size:11px}
+
+  /* Cloud bar */
+  #cloudBar{padding:7px 12px;gap:7px;font-size:10px}
+
+  /* KPI grid — 2 columnas en tablet */
+  .kpi-grid{grid-template-columns:repeat(2,1fr)}
+
+  /* P&L blocks ya tiene su media query a 860px */
+
+  /* Consol grid */
+  .consol-grid{grid-template-columns:1fr}
+
+  /* Upload zones */
+  .upload-zone{padding:28px 16px}
+
+  /* ARR */
+  .arr-kpi-row{grid-template-columns:repeat(2,1fr)}
+  .arr-product-grid{grid-template-columns:1fr}
+  .arr-card-grid{grid-template-columns:1fr 1fr}
+
+  /* Buscador */
+  .bus-kv{grid-template-columns:130px 1fr}
+}
+
+@media(max-width:480px){
+  /* Container */
+  .container{padding:10px}
+
+  /* Header compacto */
+  .logo-area h1{font-size:16px}
+  .logo-area p{font-size:9px;letter-spacing:1.5px}
+
+  /* Tabs más compactos */
+  .tab-btn{padding:9px 12px;font-size:10px;letter-spacing:0}
+
+  /* Login card */
+  .login-card{padding:28px 20px;max-width:100%;margin:12px}
+  .login-title{font-size:17px}
+
+  /* KPI — 2 columnas compactas */
+  .kpi-grid{grid-template-columns:repeat(2,1fr);gap:8px}
+  .kpi-value{font-size:18px}
+  .kpi-card{padding:11px 13px}
+  .kpi-label{font-size:9px;letter-spacing:1px}
+
+  /* Tablas: fuente más chica, padding reducido */
+  table{font-size:11px}
+  thead th,td{padding:7px 9px}
+  thead th:first-child,td:first-child{padding-left:10px}
+  tbody tr.sub-row td:first-child{padding-left:22px}
+
+  /* Secciones */
+  .sec-header{padding:9px 12px}
+  .sec-title{font-size:10px;letter-spacing:.6px}
+  .sec-total{font-size:12px}
+
+  /* P&L rows */
+  .pnl-row{padding:7px 12px;font-size:10px}
+  .pnl-row.eb .pv,.pnl-row.ea .pv,.pnl-row.nt .pv{font-size:12px}
+
+  /* Consol cards */
+  .consol-row{padding:6px 12px;font-size:10px}
+  .consol-tbl th,.consol-tbl td{padding:7px 8px;font-size:11px}
+
+  /* Period bar */
+  .period-bar{gap:5px}
+  .view-btn{padding:4px 9px;font-size:10px}
+  select.sel{font-size:10px;padding:4px 7px}
+
+  /* Upload zone */
+  .upload-zone{padding:20px 12px}
+  .upload-icon{font-size:28px}
+  .upload-zone h2{font-size:13px}
+  .upload-zone p{font-size:10px}
+
+  /* Cloud bar — compacto */
+  #cloudBar{flex-wrap:wrap;padding:6px 10px;gap:5px}
+  .cloud-sep{display:none}
+  .cloud-btn{padding:4px 10px;font-size:9px}
+
+  /* Section body tablas */
+  .sec-body table{min-width:520px}
+
+  /* ARR */
+  .arr-kpi-row{grid-template-columns:repeat(2,1fr);gap:8px}
+  .arr-kpi{padding:11px 12px}
+  .arr-kpi-val{font-size:15px}
+  .arr-kpi-label{font-size:9px}
+  .arr-product-grid{grid-template-columns:1fr}
+  .met-arr-hero{flex-direction:column;align-items:flex-start;gap:8px;padding:14px 16px}
+  .met-arr-value{font-size:22px}
+
+  /* Bridge */
+  .brg-card{padding:12px 13px}
+  .brg-erp-pill{font-size:10px;padding:5px 12px}
+
+  /* Buscador */
+  .bus-wrap{max-width:100%}
+  .bus-row{flex-direction:column;gap:8px}
+  .bus-input{min-width:unset;width:100%}
+  .bus-btn{width:100%;justify-content:center}
+  .bus-kv{grid-template-columns:1fr;row-gap:2px}
+  .bus-kv-label{margin-top:10px}
+
+  /* ZIP banner */
+  #zipBanner{flex-direction:column;padding:14px 16px;gap:10px;text-align:center}
+
+  /* Metrics */
+  .met-upload-zone{padding:20px 12px}
+  .erp-metrics-grid{grid-template-columns:1fr}
+
+  /* Consol MRR cards */
+  .cmrr-grid{grid-template-columns:1fr}
+}
 </style>
 </head>
 <body>
@@ -483,7 +625,7 @@ table.brg-bridge tbody tr.pct.B td{font-weight:700;color:var(--text2);background
 <div id="loginOverlay">
   <div class="login-card" id="loginCard">
     <div class="login-logo-wrap">
-      <img src="grupo-sable-300x200-1.png" alt="Sable ERP" onerror="this.style.display='none'">
+      <img src="data:image/png;base64,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" alt="Sable ERP" onerror="this.style.display='none'">
     </div>
     <div class="login-divider"></div>
     <div class="login-title">Dashboard Financiero</div>
@@ -506,26 +648,47 @@ table.brg-bridge tbody tr.pct.B td{font-weight:700;color:var(--text2);background
 </div>
 
 <script>
-function doLogin(){
+const WORKER_URL = 'https://dashboardfinanciero.pnovoav.workers.dev';
+
+async function doLogin(){
   const user = document.getElementById('loginUser').value.trim();
   const pass = document.getElementById('loginPass').value;
   const card = document.getElementById('loginCard');
   const err  = document.getElementById('loginError');
+  const btn  = card.querySelector('.login-btn');
 
-  if(user === 'Admin' && pass === 'sableerp2026'){
-    err.style.display = 'none';
-    const overlay = document.getElementById('loginOverlay');
-    overlay.classList.add('fade-out');
-    setTimeout(() => {
-      overlay.style.display = 'none';
-      document.getElementById('cloudBar').style.display = 'flex';
-      cloudLoad(false);
-    }, 500);
-  } else {
+  btn.disabled = true;
+  btn.textContent = 'Verificando...';
+
+  try {
+    const res = await fetch(`${WORKER_URL}/login`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ user, pass })
+    });
+
+    if (res.ok) {
+      const data = await res.json();
+      if (data.token) GIST_TOKEN = data.token;
+      err.style.display = 'none';
+      const overlay = document.getElementById('loginOverlay');
+      overlay.classList.add('fade-out');
+      setTimeout(() => {
+        overlay.style.display = 'none';
+        document.getElementById('cloudBar').style.display = 'flex';
+        cloudLoad(false);
+      }, 500);
+    } else {
+      throw new Error('invalid');
+    }
+  } catch(e) {
     err.style.display = 'block';
     card.classList.remove('shake');
-    void card.offsetWidth; // reflow to restart animation
+    void card.offsetWidth;
     card.classList.add('shake');
+  } finally {
+    btn.disabled = false;
+    btn.textContent = 'Ingresar →';
   }
 }
 // Focus username on load
@@ -546,7 +709,7 @@ window.addEventListener('load', () => {
 //     (puede ser secreto, contenido cualquiera)
 //  4. Pega el token y el ID del Gist abajo
 // ═══════════════════════════════════════════════════════
-const GIST_TOKEN = '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';   // ghp_xxxxxxxxxxxx
+let GIST_TOKEN = '';   // opcional: dejar vacío si el Gist es público y solo quieres lectura
 const GIST_ID    = 'c72d7567dafb186c0a9e700cee59f309';      // mgr + rnd + usr
 const GIST_ID_BRG = 'fca69901de41a6b50de5d8ebef96b009';     // bridge MRR
 const GIST_FILE  = 'sable_dashboard.json';
@@ -568,15 +731,21 @@ function cloudSetStatus(state, msg) {
   dot.className  = 'cloud-dot ' + state;
   text.textContent = msg;
 }
+function cloudHasWriteAccess() {
+  return !!(GIST_TOKEN && String(GIST_TOKEN).trim());
+}
 function cloudShowSaveBtn(show) {
-  document.getElementById('cloudSaveBtn').style.display = show ? 'inline-flex' : 'none';
+  const btn = document.getElementById('cloudSaveBtn');
+  if (!btn) return;
+  btn.style.display = (show && cloudHasWriteAccess()) ? 'inline-flex' : 'none';
 }
 
 // ─── LOAD from Gist ──────────────────────────────────
 async function cloudFetchGistFile(gistId, fileName) {
-  const res = await fetch(`${GIST_BASE}/${gistId}`, {
-    headers: { 'Authorization': 'token ' + GIST_TOKEN, 'Accept': 'application/vnd.github+json' }
-  });
+  const headers = { 'Accept': 'application/vnd.github+json' };
+  if (cloudHasWriteAccess()) headers['Authorization'] = 'token ' + GIST_TOKEN;
+
+  const res = await fetch(`${GIST_BASE}/${gistId}`, { headers });
   if (!res.ok) throw new Error('HTTP ' + res.status);
 
   const json = await res.json();
@@ -611,8 +780,8 @@ function cloudParseStoredJson(text, label) {
 }
 
 async function cloudLoad(manual) {
-  if (GIST_TOKEN.includes('AQUI') || GIST_ID.includes('AQUI')) {
-    cloudSetStatus('error', 'Sin configurar — ver comentarios en el código');
+  if (!GIST_ID || GIST_ID.includes('AQUI')) {
+    cloudSetStatus('error', 'Sin configurar — falta GIST_ID');
     return;
   }
   cloudSetStatus('saving', manual ? 'Recargando...' : 'Cargando datos guardados...');
@@ -662,8 +831,12 @@ async function cloudLoad(manual) {
 
 // ─── SAVE to Gist ────────────────────────────────────
 async function cloudSave() {
-  if (GIST_TOKEN.includes('AQUI') || GIST_ID.includes('AQUI')) {
-    cloudSetStatus('error', 'Sin configurar — ver comentarios en el código');
+  if (!cloudHasWriteAccess()) {
+    cloudSetStatus('error', 'Solo lectura: el Gist público carga sin token, pero guardar requiere token');
+    return;
+  }
+  if (!GIST_ID || GIST_ID.includes('AQUI')) {
+    cloudSetStatus('error', 'Sin configurar — falta GIST_ID');
     return;
   }
   if (cloudSaving) return; // evitar guardados simultáneos
@@ -673,12 +846,15 @@ async function cloudSave() {
 
   // Payload principal — sin bridge
   const payload = {
-    mgrData:     mgrData,
-    mgrFiles:    mgrFiles,
-    rndData:     rndData,
-    rndFileName: rndFile,
-    usrData:     usrData,
-    savedAt:     new Date().toISOString()
+    mgrData:      mgrData,
+    mgrFiles:     mgrFiles,
+    rndData:      rndData,
+    rndFileName:  rndFile,
+    peruData:     peruData,
+    peruFile2025: peruFile2025,
+    peruFileLong: peruFileLong,
+    usrData:      usrData,
+    savedAt:      new Date().toISOString()
   };
 
   const rawJson = JSON.stringify(payload);
@@ -763,6 +939,17 @@ function cloudRestore(data) {
     rndBuildSelectors();
     rndRenderAll();
   }
+  // Restore Random Perú data
+  if (data.peruData && Object.keys(data.peruData).length > 0) {
+    peruData = data.peruData;
+    peruFile2025 = data.peruFile2025 || null;
+    peruFileLong = data.peruFileLong || null;
+    if (peruFile2025) document.getElementById('peruFileTag2025').innerHTML = `<span class="file-tag">📄 ${peruFile2025}</span>`;
+    if (peruFileLong) document.getElementById('peruFileTagLong').innerHTML = `<span class="file-tag">📄 ${peruFileLong}</span>`;
+    peruSyncUploadUI();
+    peruBuildSelectors();
+    peruRenderAll();
+  }
   // Restore Bridge data
   if (data.brgData && data.brgData.length > 0) {
     console.log('cloudRestore: brgData rows:', data.brgData.length);
@@ -784,6 +971,7 @@ function cloudRestore(data) {
       if (c) { c.textContent = 'Random ✓'; c.classList.add('loaded'); }
     }
   }
+  peruSyncUploadUI();
   // Refresh consolidated
   consolRefresh();
   // Show save button
@@ -831,7 +1019,7 @@ function cloudAutoSave() {
       <h1>Dashboard Financiero · Sable <span style="color:var(--accent)">ERP</span></h1>
       <p>PCGA · CLP · Multi-empresa</p>
     </div>
-    <img src="grupo-sable-300x200-1.png" style="height:120px;object-fit:contain;opacity:.9">
+    <img src="data:image/png;base64,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" style="height:120px;object-fit:contain;opacity:.9">
   </div>
 </header>
 
@@ -839,6 +1027,7 @@ function cloudAutoSave() {
   <div class="tab-nav">
     <button class="tab-btn manager active" onclick="switchTab('manager')">▸ Manager Software</button>
     <button class="tab-btn random" onclick="switchTab('random')">▸ Random</button>
+    <button class="tab-btn peru" onclick="switchTab('peru')">▸ Random Perú</button>
     <button class="tab-btn consol" onclick="switchTab('consol')">◈ Consolidado</button>
     <button class="tab-btn bridge" onclick="switchTab('bridge')">⇌ MRR Bridge</button>
   </div>
@@ -980,6 +1169,57 @@ function cloudAutoSave() {
     </div>
   </div>
 
+  <!-- ══════════════════════════════════════════ RANDOM PERÚ TAB -->
+  <div class="tab-content" id="tab-peru">
+    <!-- Upload grid: dos zonas -->
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:4px" id="peruUploadGrid">
+      <div id="peruUploadZone2025" class="upload-zone" onclick="document.getElementById('peruFile2025').click()">
+        <div class="upload-icon">📊</div>
+        <h2>EERR Perú — 2025</h2>
+        <p>Sube el archivo <strong>EERR_Peru_2025.xlsx</strong> · hoja "P&L Random Perú" (formato wide)</p>
+        <div id="peruFileTag2025" style="margin-top:8px"></div>
+      </div>
+      <div id="peruUploadZoneLong" class="upload-zone" onclick="document.getElementById('peruFileLong').click()">
+        <div class="upload-icon">📋</div>
+        <h2>EERR Perú — 2026 en adelante</h2>
+        <p>Sube el archivo <strong>Construcción_EERR_Perú.xlsx</strong> · hoja "EERR CLP" · actualizar mes a mes</p>
+        <div id="peruFileTagLong" style="margin-top:8px"></div>
+      </div>
+    </div>
+    <input type="file" id="peruFile2025" accept=".xlsx,.xls" style="display:none">
+    <input type="file" id="peruFileLong" accept=".xlsx,.xls" style="display:none">
+
+    <div id="peruDashboard" style="display:none">
+      <div class="period-bar">
+        <span class="co-badge peru">PE</span>
+        <span class="period-label">Vista</span>
+        <div class="view-toggle">
+          <button class="view-btn active" onclick="peruSetView('mes')" id="peruVBtn_mes">Mes</button>
+          <button class="view-btn" onclick="peruSetView('ytd')" id="peruVBtn_ytd">YTD</button>
+          <button class="view-btn" onclick="peruSetView('anual')" id="peruVBtn_anual">Anual</button>
+          <button class="view-btn" onclick="peruSetView('rango')" id="peruVBtn_rango">Rango</button>
+        </div>
+        <div class="divider"></div>
+        <span class="period-label">Período</span>
+        <select class="sel" id="peruYear" onchange="peruOnYearChange()"></select>
+        <select class="sel" id="peruMonth" onchange="peruRenderAll()"></select>
+        <span id="peruRangoBar" style="display:none;align-items:center;gap:6px">
+          <select class="sel" id="peruRangoStart" onchange="peruRenderAll()"></select>
+          <span style="font-size:10px;color:var(--text3)">→</span>
+          <select class="sel" id="peruRangoEnd" onchange="peruRenderAll()"></select>
+        </span>
+      </div>
+      <div class="kpi-grid" id="peruKpi"></div>
+      <div class="section">
+        <div class="sec-header" onclick="toggleSec('peruBRes','peruARes')">
+          <span class="sec-title">Estado de Resultados</span>
+          <span class="arrow" id="peruARes">▼</span>
+        </div>
+        <div class="sec-body" id="peruBRes"></div>
+      </div>
+    </div>
+  </div>
+
   <!-- ══════════════════════════════════════════ CONSOLIDADO TAB -->
   <div class="tab-content" id="tab-consol">
     <div id="consolContent">
@@ -989,6 +1229,8 @@ function cloudAutoSave() {
       <div id="consolDash" style="display:none">
         <div class="period-bar">
           <span class="co-badge grp">Sable ERP</span>
+          <span class="co-badge rnd" id="consolBadgeRnd" style="display:none">RND CL</span>
+          <span class="co-badge peru" id="consolBadgePeru" style="display:none">RND PE</span>
           <span class="period-label">Vista</span>
           <div class="view-toggle">
             <button class="view-btn active" onclick="consolSetView('mes')" id="consolVBtn_mes">Mes</button>
@@ -1533,6 +1775,200 @@ const RND_MANUAL={'202502':{'Licencias':2952879}};
 
 let rndData={}, rndFile=null, rndView='mes';
 
+// ─── PERU DATA ────────────────────────────────────────
+let peruData={}, peruFile2025=null, peruFileLong=null, peruView='mes';
+
+function peruSyncUploadUI(){
+  const grid=document.getElementById('peruUploadGrid');
+  const dash=document.getElementById('peruDashboard');
+  const hasData=!!(peruData && Object.keys(peruData).length>0);
+  if(grid) grid.style.display = hasData ? 'none' : 'grid';
+  if(dash) dash.style.display = hasData ? 'block' : 'none';
+}
+
+document.getElementById('peruFile2025').addEventListener('change',e=>{
+  if(e.target.files[0]) peruLoadFile(e.target.files[0],'2025'); e.target.value='';
+});
+document.getElementById('peruFileLong').addEventListener('change',e=>{
+  if(e.target.files[0]) peruLoadFile(e.target.files[0],'long'); e.target.value='';
+});
+['peruUploadZone2025','peruUploadZoneLong'].forEach(id=>{
+  const el=document.getElementById(id);
+  const type=id.includes('2025')?'2025':'long';
+  el.addEventListener('dragover',e=>{e.preventDefault();el.classList.add('drag');});
+  el.addEventListener('dragleave',()=>el.classList.remove('drag'));
+  el.addEventListener('drop',e=>{e.preventDefault();el.classList.remove('drag');if(e.dataTransfer.files[0]) peruLoadFile(e.dataTransfer.files[0],type);});
+});
+
+function peruLoadFile(file, type){
+  waitForXLSX(()=>{
+    const reader=new FileReader();
+    reader.onload=ev=>{
+      try{
+        const wb=XLSX.read(ev.target.result,{type:'binary',cellDates:true,raw:false});
+        // 2025: hoja "P&L Random Perú", 2026+: hoja "EERR CLP"
+        const sheetName = type==='2025'
+          ? (wb.SheetNames.find(s=>s.includes('Random')||s.includes('P&L'))||wb.SheetNames[0])
+          : (wb.SheetNames.find(s=>s.includes('EERR')||s.includes('CLP'))||wb.SheetNames[0]);
+        const ws=wb.Sheets[sheetName];
+        const rows=XLSX.utils.sheet_to_json(ws,{header:1,raw:true,defval:null});
+        // Row 4 (index 4, 0-based) has year numbers in cols 15-26
+        const yearRow=rows[4]||[];
+        // Build col->month map: col 15=jan, col 16=feb, ... col 26=dec
+        const colMap={};
+        for(let c=15;c<=26;c++){
+          const yr=parseFloat(yearRow[c]);
+          if(yr>2000&&yr<2100){colMap[c]={year:yr,month:c-14};}
+        }
+        // Key rows (0-based indices) and their field names
+        const KEY=[
+          {idx:11,field:'ing',sign:1},
+          {idx:21,field:'cogs',sign:-1},   // stored negative, display positive
+          {idx:45,field:'mb',sign:1},
+          {idx:50,field:'sga',sign:-1},    // stored negative, display positive
+          {idx:80,field:'ebit',sign:1},
+          {idx:86,field:'ebitda',sign:1},
+          {idx:96,field:'noop',sign:1}
+        ];
+        // Merge into peruData (don't clear — allow both files coexist by year)
+        KEY.forEach(({idx,field,sign})=>{
+          const row=rows[idx]||[];
+          Object.entries(colMap).forEach(([c,{year,month}])=>{
+            const raw=parseFloat(row[parseInt(c)])||0;
+            if(raw===0) return;
+            const val=raw*sign;
+            if(!peruData[year]) peruData[year]={};
+            if(!peruData[year][month]) peruData[year][month]={};
+            peruData[year][month][field]=val;
+          });
+        });
+        if(type==='2025'){
+          peruFile2025=file.name;
+          document.getElementById('peruFileTag2025').innerHTML=`<span class="file-tag">📄 ${file.name}</span>`;
+        } else {
+          peruFileLong=file.name;
+          document.getElementById('peruFileTagLong').innerHTML=`<span class="file-tag">📄 ${file.name}</span>`;
+        }
+        peruSyncUploadUI();
+        peruBuildSelectors(); peruRenderAll();
+        consolRefresh();
+        cloudAutoSave(); cloudShowSaveBtn(true);
+      }catch(err){showError('Error procesando Perú: '+err.message);console.error(err);}
+    };
+    reader.readAsBinaryString(file);
+  });
+}
+
+function peruBuildSelectors(){
+  const years=Object.keys(peruData).map(Number).sort();
+  const ys=document.getElementById('peruYear');
+  const cur=ys.value;
+  ys.innerHTML=years.map(y=>`<option value="${y}">${y}</option>`).join('');
+  if(years.includes(parseInt(cur))) ys.value=cur; else ys.value=years[years.length-1];
+  peruBuildMonths();
+}
+function peruBuildMonths(){
+  const year=parseInt(document.getElementById('peruYear').value);
+  const months=Object.keys(peruData[year]||{}).map(Number).sort((a,b)=>a-b);
+  const sel=document.getElementById('peruMonth');
+  const cur=sel.value;
+  sel.innerHTML=months.map(m=>`<option value="${m}">${MESES_FULL[m-1]}</option>`).join('');
+  if(months.includes(parseInt(cur))) sel.value=cur; else sel.value=months[months.length-1];
+}
+function peruOnYearChange(){peruBuildMonths();peruRenderAll();}
+function peruSetView(v){
+  peruView=v;
+  ['mes','ytd','anual','rango'].forEach(x=>{const b=document.getElementById('peruVBtn_'+x);if(b)b.classList.toggle('active',x===v);});
+  document.getElementById('peruMonth').style.display=(v==='anual'||v==='rango')?'none':'block';
+  document.getElementById('peruYear').style.display=(v==='rango')?'none':'block';
+  const rb=document.getElementById('peruRangoBar');
+  rb.style.display=(v==='rango')?'flex':'none';
+  if(v==='rango') peruBuildRangoSelects();
+  peruRenderAll();
+}
+function peruBuildRangoSelects(){
+  const yms=[];
+  Object.keys(peruData).forEach(y=>Object.keys(peruData[y]).forEach(m=>yms.push(parseInt(y)*100+parseInt(m))));
+  yms.sort();
+  const opts=yms.map(ym=>{const y=Math.floor(ym/100),m=ym%100;return `<option value="${ym}">${MESES[m-1]} ${y}</option>`;}).join('');
+  const ss=document.getElementById('peruRangoStart'),se=document.getElementById('peruRangoEnd');
+  const sv=ss.value,ev=se.value;
+  ss.innerHTML=opts; se.innerHTML=opts;
+  if(yms.includes(parseInt(sv))) ss.value=sv; else ss.value=yms[0];
+  if(yms.includes(parseInt(ev))) se.value=ev; else se.value=yms[yms.length-1];
+}
+
+function peruGetMonthData(year,month){
+  if(peruView==='anual'){
+    const agg={};
+    Object.values(peruData[year]||{}).forEach(md=>Object.entries(md).forEach(([k,v])=>{agg[k]=(agg[k]||0)+v;}));
+    return agg;
+  }
+  if(peruView==='ytd'){
+    const agg={};
+    Object.entries(peruData[year]||{}).filter(([m])=>parseInt(m)<=month)
+      .forEach(([,md])=>Object.entries(md).forEach(([k,v])=>{agg[k]=(agg[k]||0)+v;}));
+    return agg;
+  }
+  if(peruView==='rango'){
+    const s=parseInt(document.getElementById('peruRangoStart').value)||0;
+    const e=parseInt(document.getElementById('peruRangoEnd').value)||999999;
+    const agg={};
+    Object.keys(peruData).forEach(yr=>{
+      Object.keys(peruData[yr]).forEach(mo=>{
+        const ym=parseInt(yr)*100+parseInt(mo);
+        if(ym>=s&&ym<=e) Object.entries(peruData[yr][mo]).forEach(([k,v])=>{agg[k]=(agg[k]||0)+v;});
+      });
+    });
+    return agg;
+  }
+  return Object.assign({},(peruData[year]||{})[month]||{});
+}
+
+function peruCalc(year,month){
+  const md=peruGetMonthData(year,month);
+  return{
+    ing:    md.ing||0,
+    cogs:   md.cogs||0,   // ya positivo (abs)
+    mb:     md.mb||0,
+    sga:    md.sga||0,    // ya positivo (abs)
+    ebit:   md.ebit||0,
+    ebitda: md.ebitda||0,
+    noop:   md.noop||0
+  };
+}
+
+function peruRenderAll(){
+  if(!Object.keys(peruData).length) return;
+  const year=parseInt(document.getElementById('peruYear').value);
+  const month=parseInt(document.getElementById('peruMonth').value)||1;
+  const r=peruCalc(year,month);
+  let label;
+  if(peruView==='rango'){
+    const s=parseInt(document.getElementById('peruRangoStart').value);
+    const e=parseInt(document.getElementById('peruRangoEnd').value);
+    label=`${MESES[Math.floor(s/100)%100>0?s%100-1:0]} ${Math.floor(s/100)} → ${MESES[e%100-1]} ${Math.floor(e/100)}`;
+  } else {
+    label=peruView==='anual'?`Año ${year}`:peruView==='ytd'?`YTD ${MESES[month-1]} ${year}`:`${MESES_FULL[month-1]} ${year}`;
+  }
+
+  document.getElementById('peruKpi').innerHTML=`
+    <div class="kpi-card" style="--kpi-accent:var(--peru)"><div class="kpi-label">Ingresos Operacionales · ${label}</div><div class="kpi-value" style="color:var(--peru2)">${fmtM(r.ing)}</div><div class="kpi-sub">${fmt(r.ing)}</div></div>
+    <div class="kpi-card green"><div class="kpi-label">Margen Bruto</div><div class="kpi-value">${fmtM(r.mb)}</div><div class="kpi-sub">${pct(r.mb,r.ing)} margen</div></div>
+    <div class="kpi-card"><div class="kpi-label">EBITDA</div><div class="kpi-value">${fmtM(r.ebitda)}</div><div class="kpi-sub">${pct(r.ebitda,r.ing)} margen</div></div>`;
+
+  let rh=`
+    <div class="pnl-row"><span class="pn">Ingresos Operacionales</span><span class="pv">${fmt(r.ing)}</span></div>
+    <div class="pnl-row"><span class="pn">(-) Costo de Ventas</span><span class="pv">${fmt(r.cogs)}</span></div>
+    <div class="pnl-row hl"><span class="pn">= Margen Bruto</span><span class="pv">${fmtSign(r.mb)} <small>(${pct(r.mb,r.ing)})</small></span></div>
+    <div class="pnl-row"><span class="pn">(-) Gastos de Admin. y Ventas (SG&A)</span><span class="pv">${fmt(r.sga)}</span></div>
+    <div class="pnl-row eb"><span class="pn">= EBIT</span><span class="pv">${fmtSign(r.ebit)} <small>(${pct(r.ebit,r.ing)})</small></span></div>
+    <div class="pnl-row eb"><span class="pn">= EBITDA</span><span class="pv">${fmtSign(r.ebitda)} <small>(${pct(r.ebitda,r.ing)})</small></span></div>
+    <div class="pnl-row"><span class="pn">Resultado No Operacional</span><span class="pv">${fmtSign(r.noop)}</span></div>
+    <div class="pnl-row nt"><span class="pn">= Resultado antes de Impuestos</span><span class="pv">${fmtSign(r.ebit+r.noop)} <small>(${pct(r.ebit+r.noop,r.ing)})</small></span></div>`;
+  document.getElementById('peruBRes').innerHTML=rh;
+}
+
 document.getElementById('rndFile').addEventListener('change',e=>{
   if(e.target.files[0]) rndLoadFile(e.target.files[0]); e.target.value='';
 });
@@ -1876,13 +2312,19 @@ function consolOnYearChange(){consolBuildMonths();consolRender();}
 
 function consolRefresh(){
   const hasMgr=mgrData.length>0, hasRnd=Object.keys(rndData).length>0;
-  if(!hasMgr&&!hasRnd){
+  const hasPeru=Object.keys(peruData).length>0;
+  if(!hasMgr&&!hasRnd&&!hasPeru){
     document.getElementById('consolNoData').style.display='block';
     document.getElementById('consolDash').style.display='none';
     return;
   }
   document.getElementById('consolNoData').style.display='none';
   document.getElementById('consolDash').style.display='block';
+  // Update badges
+  const br=document.getElementById('consolBadgeRnd');
+  const bp=document.getElementById('consolBadgePeru');
+  if(br) br.style.display=hasRnd?'inline-flex':'none';
+  if(bp) bp.style.display=hasPeru?'inline-flex':'none';
   consolBuildSelectors();
   consolRender();
 }
@@ -1890,7 +2332,8 @@ function consolRefresh(){
 function consolBuildSelectors(){
   const mgrYears=mgrData.length?[...new Set(mgrData.map(d=>d.year))]:[];
   const rndYears=Object.keys(rndData).map(Number);
-  const years=[...new Set([...mgrYears,...rndYears])].sort();
+  const peruYears=Object.keys(peruData).map(Number);
+  const years=[...new Set([...mgrYears,...rndYears,...peruYears])].sort();
   const ys=document.getElementById('consolYear');
   const cur=ys.value;
   ys.innerHTML=years.map(y=>`<option value="${y}">${y}</option>`).join('');
@@ -1901,7 +2344,8 @@ function consolBuildMonths(){
   const year=parseInt(document.getElementById('consolYear').value);
   const mgrMonths=mgrData.filter(d=>d.year===year).map(d=>d.month);
   const rndMonths=Object.keys(rndData[year]||{}).map(Number);
-  const months=[...new Set([...mgrMonths,...rndMonths])].sort((a,b)=>a-b);
+  const peruMonths=Object.keys(peruData[year]||{}).map(Number);
+  const months=[...new Set([...mgrMonths,...rndMonths,...peruMonths])].sort((a,b)=>a-b);
   const sel=document.getElementById('consolMonth');
   const cur=sel.value;
   sel.innerHTML=months.map(m=>`<option value="${m}">${MESES_FULL[m-1]}</option>`).join('');
@@ -1957,11 +2401,37 @@ function consolGetRnd(year,month){
   return{tIng:r.totalIng,mb:r.mb,ebitda:r.ebitda,ebitdaAdj:r.ebitdaAdj,rec:r.recurrente};
 }
 
+function consolGetPeru(year,month){
+  if(!Object.keys(peruData).length) return null;
+  const peruViewBak=peruView;
+  peruView=consolView;
+  let rsBak,reBak;
+  if(consolView==='rango'){
+    const cs=document.getElementById('consolRangoStart').value;
+    const ce=document.getElementById('consolRangoEnd').value;
+    const rs=document.getElementById('peruRangoStart');
+    const re=document.getElementById('peruRangoEnd');
+    if(rs){rsBak=rs.value; if(!rs.querySelector(`option[value="${cs}"]`)){const o=document.createElement('option');o.value=cs;rs.appendChild(o);} rs.value=cs;}
+    if(re){reBak=re.value; if(!re.querySelector(`option[value="${ce}"]`)){const o=document.createElement('option');o.value=ce;re.appendChild(o);} re.value=ce;}
+  }
+  const r=peruCalc(year,month);
+  peruView=peruViewBak;
+  if(consolView==='rango'){
+    const rs=document.getElementById('peruRangoStart');
+    const re=document.getElementById('peruRangoEnd');
+    if(rs&&rsBak!==undefined) rs.value=rsBak;
+    if(re&&reBak!==undefined) re.value=reBak;
+  }
+  if(!r.ing) return null;
+  return{tIng:r.ing,mb:r.mb,ebitda:r.ebitda,ebitdaAdj:r.ebitda,rec:0};
+}
+
 function consolRender(){
   const year=parseInt(document.getElementById('consolYear').value);
   const month=parseInt(document.getElementById('consolMonth').value)||1;
   const mgr=consolGetMgr(year,month);
   const rnd=consolGetRnd(year,month);
+  const peru=consolGetPeru(year,month);
   let label;
   if(consolView==='rango'){
     const s=parseInt(document.getElementById('consolRangoStart').value);
@@ -1973,44 +2443,47 @@ function consolRender(){
   }
 
   // KPIs
-  const totIng=(mgr?.tIng||0)+(rnd?.tIng||0);
+  const totIng=(mgr?.tIng||0)+(rnd?.tIng||0)+(peru?.tIng||0);
   const totRec=(mgr?.rec||0)+(rnd?.rec||0);
-  const totMb=(mgr?.mb||0)+(rnd?.mb||0);
-  const totEbitdaAdj=(mgr?.ebitdaAdj||0)+(rnd?.ebitdaAdj||0);
-  const erpGrupoTotal=(mgr?.erpGrupoIng||0)+(rnd?.tIng||0);
+  const totMb=(mgr?.mb||0)+(rnd?.mb||0)+(peru?.mb||0);
+  const totEbitdaAdj=(mgr?.ebitdaAdj||0)+(rnd?.ebitdaAdj||0)+(peru?.ebitdaAdj||0);
+  const erpGrupoTotal=(mgr?.erpGrupoIng||0)+(rnd?.tIng||0)+(peru?.tIng||0);
 
   document.getElementById('consolKpi').innerHTML=`
     <div class="kpi-card teal"><div class="kpi-label">Ingresos Consolidado · ${label}</div><div class="kpi-value">${fmtM(totIng)}</div><div class="kpi-sub">${fmt(totIng)}</div></div>
     <div class="kpi-card"><div class="kpi-label">Recurrentes Consolidado</div><div class="kpi-value">${fmtM(totRec)}</div><div class="kpi-sub">${pct(totRec,totIng)} del total</div></div>
     <div class="kpi-card green"><div class="kpi-label">Margen Bruto Consolidado</div><div class="kpi-value">${fmtM(totMb)}</div><div class="kpi-sub">${pct(totMb,totIng)} margen</div></div>
     <div class="kpi-card yellow"><div class="kpi-label">EBITDA Ajustado Consolidado</div><div class="kpi-value">${fmtM(totEbitdaAdj)}</div><div class="kpi-sub">${pct(totEbitdaAdj,totIng)} margen</div></div>
-    <div class="kpi-card blue"><div class="kpi-label">Ingresos ERPs Grupo</div><div class="kpi-value">${fmtM(erpGrupoTotal)}</div><div class="kpi-sub" style="display:flex;flex-direction:column;gap:2px"><span style="color:var(--text3);font-size:9px">Time · Flexline · Manager+ · FE · Random</span><span>${pct(erpGrupoTotal,totIng)} del total consolidado</span></div></div>`;
+    <div class="kpi-card blue"><div class="kpi-label">Ingresos ERPs Grupo</div><div class="kpi-value">${fmtM(erpGrupoTotal)}</div><div class="kpi-sub" style="display:flex;flex-direction:column;gap:2px"><span style="color:var(--text3);font-size:9px">Time · Flexline · Manager+ · FE · Random CL · Random PE</span><span>${pct(erpGrupoTotal,totIng)} del total consolidado</span></div></div>`;
 
-  // YoY data for consol (Mes view only)
-  const showYoYConsol = consolView==='mes';
-  let mgrYoY=null, rndYoY=null;
+  // YoY (Mes view only)
+  const showYoYConsol=consolView==='mes';
+  let mgrYoY=null,rndYoY=null,peruYoY=null;
   if(showYoYConsol){
-    const consolViewBak=consolView; consolView='mes';
+    const bak=consolView; consolView='mes';
     mgrYoY=consolGetMgr(year-1,month);
     rndYoY=consolGetRnd(year-1,month);
-    consolView=consolViewBak;
+    peruYoY=consolGetPeru(year-1,month);
+    consolView=bak;
   }
-  const totIngYoY=(mgrYoY?.tIng||0)+(rndYoY?.tIng||0);
+  const totIngYoY=(mgrYoY?.tIng||0)+(rndYoY?.tIng||0)+(peruYoY?.tIng||0);
 
-  // Table
+  // Table — columnas: Manager | % | Random CL | % | Random PE | % | Consolidado | % | vs AA
   const rows2=[
-    {label:'Ingresos',mgr:mgr?.tIng,rnd:rnd?.tIng,mgrY:mgrYoY?.tIng,rndY:rndYoY?.tIng},
-    {label:'Recurrentes',mgr:mgr?.rec,rnd:rnd?.rec,mgrY:mgrYoY?.rec,rndY:rndYoY?.rec},
-    {label:'Margen Bruto',mgr:mgr?.mb,rnd:rnd?.mb,mgrY:mgrYoY?.mb,rndY:rndYoY?.mb},
-    {label:'EBITDA',mgr:mgr?.ebitda,rnd:rnd?.ebitda,mgrY:mgrYoY?.ebitda,rndY:rndYoY?.ebitda},
-    {label:'EBITDA Ajustado',mgr:mgr?.ebitdaAdj,rnd:rnd?.ebitdaAdj,mgrY:mgrYoY?.ebitdaAdj,rndY:rndYoY?.ebitdaAdj},
+    {label:'Ingresos',         mgr:mgr?.tIng,   rnd:rnd?.tIng,   pe:peru?.tIng,   mgrY:mgrYoY?.tIng,   rndY:rndYoY?.tIng,   peY:peruYoY?.tIng},
+    {label:'Recurrentes',      mgr:mgr?.rec,    rnd:rnd?.rec,    pe:peru?.rec,    mgrY:mgrYoY?.rec,    rndY:rndYoY?.rec,    peY:peruYoY?.rec},
+    {label:'Margen Bruto',     mgr:mgr?.mb,     rnd:rnd?.mb,     pe:peru?.mb,     mgrY:mgrYoY?.mb,     rndY:rndYoY?.mb,     peY:peruYoY?.mb},
+    {label:'EBITDA',           mgr:mgr?.ebitda, rnd:rnd?.ebitda, pe:peru?.ebitda, mgrY:mgrYoY?.ebitda, rndY:rndYoY?.ebitda, peY:peruYoY?.ebitda},
+    {label:'EBITDA Ajustado',  mgr:mgr?.ebitdaAdj,rnd:rnd?.ebitdaAdj,pe:peru?.ebitdaAdj,mgrY:mgrYoY?.ebitdaAdj,rndY:rndYoY?.ebitdaAdj,peY:peruYoY?.ebitdaAdj},
   ];
 
   let th=`<table class="consol-tbl"><thead><tr>
     <th style="text-align:left">Concepto</th>
     <th style="color:var(--mgr2)">Manager Software</th>
     <th>% Ing.</th>
-    <th style="color:var(--rnd2)">Random</th>
+    <th style="color:var(--rnd2)">Random CL</th>
+    <th>% Ing.</th>
+    <th style="color:var(--peru2)">Random PE</th>
     <th>% Ing.</th>
     <th style="color:var(--grp2)">Consolidado</th>
     <th>% Ing.</th>
@@ -2018,15 +2491,17 @@ function consolRender(){
   </tr></thead><tbody>`;
 
   rows2.forEach(r=>{
-    const mv=r.mgr||0, rv=r.rnd||0, tv=mv+rv;
-    const myv=(r.mgrY||0)+(r.rndY||0);
-    const mI=mgr?.tIng||0, rI=rnd?.tIng||0;
+    const mv=r.mgr||0, rv=r.rnd||0, pv=r.pe||0, tv=mv+rv+pv;
+    const myv=(r.mgrY||0)+(r.rndY||0)+(r.peY||0);
+    const mI=mgr?.tIng||0, rI=rnd?.tIng||0, pI=peru?.tIng||0;
     th+=`<tr>
       <td>${r.label}</td>
       <td style="color:var(--mgr2)">${mgr?fmt(mv):'—'}</td>
       <td style="color:var(--text3)">${mgr?pct(mv,mI):'—'}</td>
       <td style="color:var(--rnd2)">${rnd?fmt(rv):'—'}</td>
       <td style="color:var(--text3)">${rnd?pct(rv,rI):'—'}</td>
+      <td style="color:var(--peru2)">${peru?fmt(pv):'—'}</td>
+      <td style="color:var(--text3)">${peru?pct(pv,pI):'—'}</td>
       <td style="color:var(--grp2)">${fmt(tv)}</td>
       <td style="color:var(--text3)">${pct(tv,totIng)}</td>
       ${showYoYConsol?`<td style="color:var(--text3)">${myv?growHtml(tv,myv):'—'}</td>`:''}
@@ -2054,7 +2529,7 @@ function consolRenderSankey(year, month, label) {
 
   const hasMgr = mgrData.length > 0;
   const hasRnd = Object.keys(rndData).length > 0;
-  if (!hasMgr && !hasRnd) { section.style.display = 'none'; return; }
+  if (!hasMgr && !hasRnd && !Object.keys(peruData).length) { section.style.display = 'none'; return; }
 
   const periodEl = document.getElementById('consolSankeyLabel');
   if (periodEl) periodEl.textContent = label || '';
@@ -2107,15 +2582,46 @@ function consolRenderSankey(year, month, label) {
     if (r.totalIng > 0) rndR = r;
   }
 
-  const totIng = mgrTIng + (rndR ? rndR.totalIng : 0);
+  // Peru income — added to rndIng in Sankey (mismo nodo Random CL+PE)
+  let peruIngSankey = 0;
+  const hasPeru = Object.keys(peruData).length > 0;
+  if (hasPeru) {
+    const peruViewBak = peruView; peruView = consolView;
+    let prsBak, preBak;
+    if (consolView === 'rango') {
+      const cs = document.getElementById('consolRangoStart').value;
+      const ce = document.getElementById('consolRangoEnd').value;
+      const rs = document.getElementById('peruRangoStart');
+      const re = document.getElementById('peruRangoEnd');
+      if (rs) { prsBak = rs.value; if (!rs.querySelector(`option[value="${cs}"]`)) { const o = document.createElement('option'); o.value = cs; rs.appendChild(o); } rs.value = cs; }
+      if (re) { preBak = re.value; if (!re.querySelector(`option[value="${ce}"]`)) { const o = document.createElement('option'); o.value = ce; re.appendChild(o); } re.value = ce; }
+    }
+    const pr = peruCalc(year, month);
+    peruView = peruViewBak;
+    if (consolView === 'rango') {
+      const rs2 = document.getElementById('peruRangoStart');
+      const re2 = document.getElementById('peruRangoEnd');
+      if (rs2 && prsBak !== undefined) rs2.value = prsBak;
+      if (re2 && preBak !== undefined) re2.value = preBak;
+    }
+    peruIngSankey = pr.ing || 0;
+  }
+
+  const totIng = mgrTIng + (rndR ? rndR.totalIng : 0) + peruIngSankey;
   if (totIng <= 0) { section.style.display = 'none'; return; }
 
-  const totCost     = mgrTCost + (rndR ? rndR.totalCogs : 0);
-  const totGav      = mgrTGav  + (rndR ? rndR.totalSga  : 0);
-  const totMB       = totIng - totCost;
-  const totAdj      = mgrDep + mgrAdj + (rndR ? rndR.adjRent + rndR.adjCorp : 0);
-  const gavAjustado = Math.max(0, totGav - totAdj);
-  const ebitdaAdj   = Math.max(0, totMB - gavAjustado);
+  // Usar EXACTAMENTE la misma lógica del consolidado de arriba:
+  // 1) Margen Bruto consolidado = suma de MB por compañía
+  // 2) EBITDA mostrado = EBITDA Ajustado consolidado
+  // 3) Los ajustes se reflejan directamente en GAV ajustado, no se vuelven a sumar al final
+  const mgrConsol  = consolGetMgr(year, month);
+  const rndConsol  = consolGetRnd(year, month);
+  const peruConsol = consolGetPeru(year, month);
+
+  const totMB        = (mgrConsol?.mb || 0) + (rndConsol?.mb || 0) + (peruConsol?.mb || 0);
+  const ebitdaAdj    = (mgrConsol?.ebitdaAdj || 0) + (rndConsol?.ebitdaAdj || 0) + (peruConsol?.ebitdaAdj || 0);
+  const totCost      = Math.max(0, totIng - totMB);
+  const gavAjustado  = Math.max(0, totMB - ebitdaAdj);
   if (totMB <= 0) { section.style.display = 'none'; return; }
 
   const timeIng  = mgrErpSum(mgrIngData, 'Time');
@@ -2123,7 +2629,7 @@ function consolRenderSankey(year, month, label) {
   const mplusIng = mgrErpSum(mgrIngData, 'Manager+');
   const feIng    = mgrErpSum(mgrIngData, 'FE');
   const rexIng   = mgrErpSum(mgrIngData, 'REX') + mgrErpSum(mgrIngData, 'GeoVictoria');
-  const rndIng   = rndR ? rndR.totalIng : 0;
+  const rndIng   = (rndR ? rndR.totalIng : 0) + peruIngSankey;  // CL + PE combinados
   const erpIng   = timeIng + flexIng + mplusIng + feIng + rndIng;
   const otrosIng = Math.max(0, totIng - erpIng - rexIng);
 
@@ -2280,7 +2786,7 @@ function consolRenderSankey(year, month, label) {
       f:     { name: 'Flexline',          val: flexIng,     pct: null,                     side: 'left',       col: '#374151' },
       mp:    { name: 'Manager+',          val: mplusIng,    pct: null,                     side: 'left',       col: '#374151' },
       fe:    { name: 'Fact. Electrónica', val: feIng,       pct: null,                     side: 'left',       col: '#374151' },
-      r:     { name: 'Random',            val: rndIng,      pct: null,                     side: 'left',       col: '#374151' },
+      r:     { name: peruIngSankey>0 ? 'Random CL+PE' : 'Random', val: rndIng, pct: null, side: 'left', col: '#374151' },
       rx:    { name: 'REX + GeoVictoria', val: rexIng,      pct: null,                     side: 'left',       col: '#374151' },
       o:     { name: 'Otros',             val: otrosIng,    pct: null,                     side: 'left',       col: '#374151' },
       erp:   { name: 'Ingresos ERP',      val: erpIng,      pct: null,                     side: 'above-left', col: '#6b7280' },
@@ -2321,7 +2827,7 @@ function consolRenderSankey(year, month, label) {
         const estTextW     = lbl.name.length * FS * 0.52;
         const totalLogoW   = logos.length > 0 ? logos.length * ICON_SIZE + (logos.length - 1) * ICON_GAP : 0;
         // Fine optical alignment per logo group
-        const logoOffsetXMap = { t: -4, f: 0, mp: -10, r: -16, rx: -6, fe: 0, o: 0 };
+        const logoOffsetXMap = { t: -16, f: 0, mp: -10, r: -20, rx: -6, fe: 0, o: 0 };
         const logoOffsetX = logoOffsetXMap[node.id] || 0;
         // Logo starts immediately left of text, with a small gap
         const LOGOS_START_X = TEXT_RIGHT_X - estTextW - (logos.length ? totalLogoW + 8 : 0) + logoOffsetX;
@@ -2497,11 +3003,18 @@ function consolRenderMrrMetrics(year,month){
       usersSection.style.display='block';
       if(usrPeriodLbl) usrPeriodLbl.textContent=start+' → '+end;
 
+      var fmtPerUser=function(v){
+        if(v===null||v===undefined||isNaN(v)) return '—';
+        return isCLP
+          ? Math.round(v).toLocaleString('es-CL')
+          : v.toLocaleString('es-CL',{minimumFractionDigits:1,maximumFractionDigits:1})+' UF';
+      };
+
       var rows=[
         {label:'N° Clientes',fn:function(erp,m){return m?m.nClients.toLocaleString('es-CL'):'—';}},
         {label:'ARPA',fn:function(erp,m){
           if(!m||!m.nClients) return '—';
-          return brgFmtGlobal(m.eop/m.nClients,isCLP)+(isCLP?' MM$':' UF');
+          return fmtPerUser(m.eop/m.nClients);
         }},
         {label:'N° Usuarios',fn:function(erp,m){
           var u=usrGetUsers(erp,end); return u!==null?u.toLocaleString('es-CL'):'—';
@@ -2509,7 +3022,7 @@ function consolRenderMrrMetrics(year,month){
         {label:'ARPU',fn:function(erp,m){
           if(!m) return '—';
           var u=usrGetUsers(erp,end); if(!u||u<=0) return '—';
-          return brgFmtGlobal(m.eop/u,isCLP)+(isCLP?' MM$':' UF');
+          return fmtPerUser(m.eop/u);
         }},
       ];
 
@@ -3081,26 +3594,40 @@ function usrGetUsers(erp, endMonth) {
 function zipClassifyFile(name) {
   const n = name.toLowerCase();
   // Ignore hidden/system files
-  if (n.startsWith('__macosx') || n.startsWith('.') || !n.endsWith('.xlsx') && !n.endsWith('.xls')) return null;
+  if (n.startsWith('__macosx') || n.startsWith('.') || (!n.endsWith('.xlsx') && !n.endsWith('.xls'))) return null;
+
   // Bridge / MRR
   if (n.includes('mrr') || n.includes('bridge') || n.includes('activo')) return 'bridge';
+
   // Users — wide format or Random users file
   if (n.includes('usuario') || n.includes('wide') || n.includes('licencia') || n.includes('facturado')) return 'users';
-  // Random
+
+  // Perú — DEBE ir antes que Random porque varios nombres incluyen "random" o "eerr"
+  const isPeru = n.includes('peru') || n.includes('perú') || n.includes('sistemica') || n.includes('soles');
+  if (isPeru && (n.includes('2025') || n.includes('p&l') || n.includes('pl_') || n.includes('_pl'))) return 'peru2025';
+  if (isPeru && (n.includes('2026') || n.includes('long') || n.includes('largo'))) return 'perulong';
+  if (isPeru && (n.includes('construccion') || n.includes('construcción'))) return 'perulong';
+  if (isPeru && n.includes('eerr')) return 'perulong';
+  if (isPeru) return 'peru2025';
+
+  // Random Chile
   if (n.includes('random') || n.includes('balance') || n.includes('eerr') || n.includes('construccion') || n.includes('construcción')) return 'random';
-  // Manager (libro mayor — catch-all for xlsx files)
+
+  // Manager (libro mayor — catch-all para xlsx)
   return 'manager';
 }
 
 function zipStatusChip(name, type, ok) {
   const colors = {
-    manager: { bg: 'var(--mgr-dim)', border: 'var(--mgr)', text: 'var(--mgr2)' },
-    random:  { bg: 'var(--rnd-dim)', border: 'var(--rnd)', text: 'var(--rnd2)' },
-    bridge:  { bg: '#eff6ff',        border: 'var(--accent)', text: 'var(--accent2)' },
-    users:   { bg: 'rgba(5,150,105,.08)', border: 'rgba(5,150,105,.3)', text: 'var(--green2)' },
-    unknown: { bg: 'var(--surface2)', border: 'var(--border2)', text: 'var(--text3)' },
+    manager:   { bg: 'var(--mgr-dim)', border: 'var(--mgr)', text: 'var(--mgr2)' },
+    random:    { bg: 'var(--rnd-dim)', border: 'var(--rnd)', text: 'var(--rnd2)' },
+    peru2025:  { bg: 'var(--peru-dim)', border: 'var(--peru)', text: 'var(--peru2)' },
+    perulong:  { bg: 'var(--peru-dim)', border: 'var(--peru)', text: 'var(--peru2)' },
+    bridge:    { bg: '#eff6ff',        border: 'var(--accent)', text: 'var(--accent2)' },
+    users:     { bg: 'rgba(5,150,105,.08)', border: 'rgba(5,150,105,.3)', text: 'var(--green2)' },
+    unknown:   { bg: 'var(--surface2)', border: 'var(--border2)', text: 'var(--text3)' },
   };
-  const label = { manager: 'Manager', random: 'Random', bridge: 'Bridge', users: 'Usuarios', unknown: '?' };
+  const label = { manager: 'Manager', random: 'Random', peru2025: 'Perú 2025', perulong: 'Perú 2026+', bridge: 'Bridge', users: 'Usuarios', unknown: '?' };
   const c = colors[type] || colors.unknown;
   const icon = ok ? '✓' : '✕';
   const iconColor = ok ? 'var(--ok)' : 'var(--danger)';
@@ -3122,10 +3649,12 @@ async function zipHandleFile(zipFile) {
   // Limpiar toda la data existente antes de cargar el ZIP
   mgrClearAll();
   rndData = {}; rndFile = null;
+  peruData = {}; peruFile2025 = null; peruFileLong = null;
   usrData = {};
   if (typeof brgRestoreData === 'function') brgRestoreData([]);
   document.getElementById('rndUploadZone').style.display = 'block';
   document.getElementById('rndDashboard').style.display = 'none';
+  peruSyncUploadUI();
   document.getElementById('brgEmptyState').style.display = '';
   document.getElementById('brgMainContent').style.display = 'none';
   consolRefresh();
@@ -3165,6 +3694,10 @@ async function zipHandleFile(zipFile) {
           usrHandleFiles([file]);
         } else if (task.type === 'random') {
           rndLoadFile(file);
+        } else if (task.type === 'peru2025') {
+          peruLoadFile(file, '2025');
+        } else if (task.type === 'perulong') {
+          peruLoadFile(file, 'long');
         } else {
           mgrLoadFile(file);
         }
@@ -3179,7 +3712,7 @@ async function zipHandleFile(zipFile) {
     banner.style.display = 'none';
     const statusDiv = document.getElementById('zipStatus');
     document.getElementById('zipStatusItems').innerHTML = chips.join('');
-    const labels = tasks.map(t=>{ const l={manager:'Manager',random:'Random',bridge:'Bridge',users:'Usuarios'};return l[t.type]||t.type; });
+    const labels = tasks.map(t=>{ const l={manager:'Manager',random:'Random',peru2025:'Perú 2025',perulong:'Perú 2026+',bridge:'Bridge',users:'Usuarios'};return l[t.type]||t.type; });
     document.getElementById('zipStatusTitle').textContent = `ZIP cargado · ${tasks.length} archivo${tasks.length!==1?'s':''} · ${[...new Set(labels)].join(', ')}`;
     document.getElementById('zipStatusDetails').style.display='none';
     document.getElementById('zipDetailsArrow').textContent='▼';
@@ -3228,8 +3761,10 @@ function zipReset() {
   // Reset all data
   mgrClearAll();
   rndData = {}; rndFile = null;
+  peruData = {}; peruFile2025 = null; peruFileLong = null;
   document.getElementById('rndUploadZone').style.display = 'block';
   document.getElementById('rndDashboard').style.display = 'none';
+  peruSyncUploadUI();
   consolRefresh();
   // Show banner again, hide status
   document.getElementById('zipStatus').style.display = 'none';
