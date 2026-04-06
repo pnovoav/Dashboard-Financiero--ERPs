@@ -1257,7 +1257,9 @@ function cloudAutoSave() {
             <span style="font-family:var(--sans);font-size:11px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:1px">◈ Flujo P&amp;L Consolidado — Sankey</span>
             <span style="font-size:10px;color:var(--text3)" id="consolSankeyLabel"></span>
           </div>
-          <div id="consolSankeyChart" style="height:480px;width:100%;"></div>
+          <div style="overflow-x:auto;-webkit-overflow-scrolling:touch;width:100%;">
+            <div id="consolSankeyChart" style="height:480px;width:100%;min-width:700px;"></div>
+          </div>
         </div>
 
         <!-- MRR / ARR Metrics by ERP (requires Bridge data) -->
@@ -2650,7 +2652,7 @@ function consolRenderSankey(year, month, label) {
   setTimeout(() => {
     el.innerHTML = '';
 
-    const W      = el.clientWidth || 960;
+    const W      = Math.max(el.clientWidth || 960, 700);
     const H      = 480;
     const ML     = 300;  // wide left margin: fixed logo column + text
     const MR     = 240;  // tighter right margin — more flow width
@@ -3222,18 +3224,19 @@ function consolRenderMrrMetrics(year,month){
     var colors=["#3b82f6","#f87171","#fca5a5","#34d399","#6ee7b7","#3b82f6"];
     var dispVals=[bopV,x12(p.churn)/div,x12(p.downsell)/div,upV,newV,eopV];
     if(typeof Plotly==='undefined') return;
+    var isMobile = window.innerWidth < 520;
     var trace={type:"bar",x:names,y:absVals,base:bases,
       marker:{color:colors,opacity:0.88,line:{width:0}},
       text:dispVals.map(function(v){return v.toLocaleString("es-CL",{minimumFractionDigits:1,maximumFractionDigits:1});}),
       textposition:"inside",
       insidetextanchor:"middle",
-      textfont:{size:12,color:"#fff",family:"'DM Mono',monospace"},
+      textfont:{size:isMobile?9:12,color:"#fff",family:"'DM Mono',monospace"},
       hovertemplate:"<b>%{x}</b><br>ARR: %{text} "+unit+"<extra></extra>"};
     var layout={
-      margin:{t:16,b:44,l:55,r:10},
-      xaxis:{tickfont:{size:11,color:"#6b7280",family:"'DM Mono',monospace"},fixedrange:true,showgrid:false},
+      margin:{t:16,b:isMobile?72:44,l:isMobile?42:55,r:10},
+      xaxis:{tickfont:{size:isMobile?9:11,color:"#6b7280",family:"'DM Mono',monospace"},tickangle:isMobile?-40:0,fixedrange:true,showgrid:false},
       yaxis:{tickfont:{size:10,color:"#9ca3af"},fixedrange:true,gridcolor:"rgba(0,0,0,.05)",zeroline:false,
-             title:{text:"ARR ("+unit+")",font:{size:10,color:"#9ca3af"}}},
+             title:{text:isMobile?"":("ARR ("+unit+")"),font:{size:10,color:"#9ca3af"}}},
       bargap:0.4,
       plot_bgcolor:"#ffffff",
       paper_bgcolor:"#ffffff",
